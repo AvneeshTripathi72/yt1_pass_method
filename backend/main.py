@@ -30,6 +30,8 @@ app.add_middleware(
         "http://[::1]:3000",
         "http://[::1]:3001",
         "https://yt1-pass-method.onrender.com",
+        "https://yt1-pass-method.vercel.app",
+        "https://yt1-pass-method-k0tggnioy.vercel.app"
     ],
     allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
