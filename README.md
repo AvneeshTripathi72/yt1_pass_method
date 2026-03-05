@@ -11,6 +11,22 @@
 
 ## ✨ Key Features 
 
+### 🔄 System Workflow
+```mermaid
+graph TD
+    A[User Input: YouTube URL] --> B{JWT Auth Check}
+    B -- Logged In --> C[Scrape Transcript]
+    B -- Guest --> D[Prompt Login/Limit]
+    C --> E{In Cache?}
+    E -- Yes --> F[Return Cached Data]
+    E -- No --> G[Multi-Layer Scrape]
+    G --> H[Save to MongoDB]
+    H --> F
+    F --> I[AI Processing: Llama 3.3]
+    I --> J[Generate Summary/Mindmap/Insights]
+    J --> K[Interactive Dashboard: Jump to Time]
+```
+
 ### 🔍 Precision Transcription
 *   **Instant Extraction**: Scrape full transcripts from any YouTube video for free.
 *   **Multi-Layer Scraping**: Advanced fallback logic (TimedText API + player scraping) ensures high success rates even for restricted videos.
