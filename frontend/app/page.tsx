@@ -27,6 +27,7 @@ import AIContent from "../components/AIContent";
 import ExportButtons from "../components/ExportButtons";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://yt1-pass-method.onrender.com/api";
+console.log("🚀 API Base initialized to:", API_BASE);
 
 export default function Home() {
   const [url, setUrl] = useState("https://www.youtube.com/watch?v=RFi5HIZLx8U&t=3s");
