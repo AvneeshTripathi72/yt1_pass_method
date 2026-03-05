@@ -19,23 +19,47 @@ async def startup_db_client():
 async def shutdown_db_client():
     await db.close_storage()
 
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:3001",
-        "http://[::1]:3000",
-        "http://[::1]:3001",
-        "https://yt1-pass-method.onrender.com",
-        "https://yt1-pass-method.vercel.app"
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Configure CORS with dynamic origin validation
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
+
+class DynamicCORSMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        if request.method == "OPTIONS":
+            origin = request.headers.get("origin")
+            response = Response(status_code=204)
+            if origin:
+                allowed_origins = [
+                    "http://localhost:3000", "http://localhost:3001",
+                    "http://127.0.0.1:3000", "http://127.0.0.1:3001",
+                    "http://[::1]:3000", "http://[::1]:3001"
+                ]
+                if origin in allowed_origins or origin.endswith(".vercel.app") or origin.endswith(".onrender.com"):
+                    response.headers["Access-Control-Allow-Origin"] = origin
+                    response.headers["Access-Control-Allow-Credentials"] = "true"
+                    response.headers["Access-Control-Allow-Methods"] = "*"
+                    response.headers["Access-Control-Allow-Headers"] = "*"
+            return response
+
+        origin = request.headers.get("origin")
+        response = await call_next(request)
+        
+        if origin:
+            allowed_origins = [
+                "http://localhost:3000", "http://localhost:3001",
+                "http://127.0.0.1:3000", "http://127.0.0.1:3001",
+                "http://[::1]:3000", "http://[::1]:3001"
+            ]
+            if origin in allowed_origins or origin.endswith(".vercel.app") or origin.endswith(".onrender.com"):
+                response.headers["Access-Control-Allow-Origin"] = origin
+                response.headers["Access-Control-Allow-Credentials"] = "true"
+                response.headers["Access-Control-Allow-Methods"] = "*"
+                response.headers["Access-Control-Allow-Headers"] = "*"
+        
+        return response
+
+app.add_middleware(DynamicCORSMiddleware)
 
 # Include routes
 app.include_router(routes.router, prefix="/api")
