@@ -40,7 +40,22 @@ app.add_middleware(
 # Include routes
 @app.get("/api")
 async def api_root():
-    return {"message": "Unified Transcript API is active", "v": "1.0.0"}
+    db_status = "unknown"
+    try:
+        if db.db is not None:
+            # Try a simple command to verify connection
+            await db.db.command("ping")
+            db_status = "connected"
+        else:
+            db_status = "not initialized"
+    except Exception as e:
+        db_status = f"error: {str(e)}"
+        
+    return {
+        "message": "Unified Transcript API is active",
+        "v": "1.0.0",
+        "database": db_status
+    }
 
 app.include_router(routes.router, prefix="/api")
 app.include_router(auth.router, prefix="/api/auth")

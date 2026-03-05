@@ -87,7 +87,9 @@ export default function Home() {
       setAuthEmail("");
       setAuthPassword("");
     } catch (err: any) {
-      alert(err.response?.data?.detail || "Authentication failed");
+      console.error("❌ Auth Error:", err);
+      const msg = err.response?.data?.detail || err.message || "Authentication failed";
+      alert(`Auth Error: ${msg}`);
     } finally {
       setAuthLoading(false);
     }
@@ -105,9 +107,10 @@ export default function Home() {
       const res = await axios.post(`${API_BASE}/transcript`, { url });
       setData(res.data);
       // Wait for React to render the tabs before potentially switching (though we stay on transcript)
-    } catch (err) {
-      console.error(err);
-      alert("Failed to fetch transcript. Make sure the backend is running.");
+    } catch (err: any) {
+      console.error("❌ Transcript Error:", err);
+      const msg = err.response?.data?.detail || err.message || "Failed to fetch transcript.";
+      alert(`API Error: ${msg}\n\nCheck console for details.`);
     } finally {
       setIsLoading(false);
     }
