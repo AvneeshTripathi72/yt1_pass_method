@@ -27,8 +27,12 @@ import AIContent from "../components/AIContent";
 import ExportButtons from "../components/ExportButtons";
 
 const getApiBase = () => {
+  // Primary fallback + ensures we always use our known live backend
   const base = process.env.NEXT_PUBLIC_API_URL || "https://yt1-pass-method.onrender.com/api";
-  return base.endsWith("/api") ? base : `${base}/api`;
+  // Clean trailing slashes
+  const clean = base.replace(/\/+$/, '');
+  // Force /api suffix if missing
+  return clean.endsWith("/api") ? clean : `${clean}/api`;
 };
 
 const API_BASE = getApiBase();

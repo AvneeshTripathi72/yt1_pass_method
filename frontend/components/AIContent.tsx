@@ -10,7 +10,14 @@ interface AIContentProps {
   transcript: string;
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const getApiBase = () => {
+  const base = process.env.NEXT_PUBLIC_API_URL || "https://yt1-pass-method.onrender.com/api";
+  const clean = base.replace(/\/+$/, '');
+  return clean.endsWith("/api") ? clean : `${clean}/api`;
+};
+
+const API_BASE = getApiBase();
+console.log("🚀 AI API Base verified to:", API_BASE);
 
 export default function AIContent({ type, transcript }: AIContentProps) {
   const [content, setContent] = useState<string>("");
