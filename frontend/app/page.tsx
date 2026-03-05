@@ -145,8 +145,23 @@ export default function Home() {
             <Youtube className="text-white" size={24} />
           </div>
           <span className="text-xl font-bold tracking-tight">Unified Transcript</span>
+          <span className="text-[10px] bg-blue-600/20 text-blue-400 px-1.5 py-0.5 rounded ml-1">v1.0.1</span>
         </div>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-400">
+          <button 
+            onClick={async () => {
+              try {
+                const res = await axios.get(`${API_BASE}`);
+                alert(`✅ API Connected!\nURL: ${API_BASE}\nResponse: ${JSON.stringify(res.data)}`);
+              } catch (err: any) {
+                alert(`❌ API Failed!\nURL: ${API_BASE}\nError: ${err.message}`);
+              }
+            }}
+            className="flex items-center gap-1.5 hover:text-white bg-white/5 px-3 py-1.5 rounded-lg border border-white/10 transition-all active:scale-95"
+          >
+            <Settings size={14} className="animate-spin-slow" />
+            Check API
+          </button>
           <a href="#" className="hover:text-white transition-colors">How it works</a>
           <a href="#" className="hover:text-white transition-colors">Pricing</a>
           {user ? (
