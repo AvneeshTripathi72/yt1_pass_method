@@ -13,6 +13,6 @@
     }
   ],
   "env": {
-    "NEXT_PUBLIC_API_URL": "https://avanish-backend.onrender.com/api"
+    "NEXT_PUBLIC_API_URL": "https://yt1-pass-method.onrender.com/api"
   }
 }

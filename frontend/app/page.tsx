@@ -26,7 +26,7 @@ import TranscriptPanel from "../components/TranscriptPanel";
 import AIContent from "../components/AIContent";
 import ExportButtons from "../components/ExportButtons";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://yt1-pass-method.onrender.com/api";
 
 export default function Home() {
   const [url, setUrl] = useState("https://www.youtube.com/watch?v=RFi5HIZLx8U&t=3s");

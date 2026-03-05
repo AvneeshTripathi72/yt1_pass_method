@@ -28,7 +28,9 @@ app.add_middleware(
         "http://127.0.0.1:3000",
         "http://127.0.0.1:3001",
         "http://[::1]:3000",
-        "http://[::1]:3001"
+        "http://[::1]:3001",
+        "https://yt1-pass-method.onrender.com",
+        "https://yt1-pass-method.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
