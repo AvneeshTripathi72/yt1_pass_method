@@ -4,6 +4,7 @@
   "scripts": {
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && python -m uvicorn main:app --reload",
-    "build:frontend": "cd frontend && npm install && npm run build"
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "build": "npm run build:frontend"
   }
 }
